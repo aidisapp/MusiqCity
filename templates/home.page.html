@@ -1,0 +1,114 @@
+{{template "base" .}} {{define "title"}} Welcome | We give you a home away
+from home {{end}} {{define "css"}}
+<link href="/static/css/index.css" rel="stylesheet" type="text/css" />
+
+<style>
+  .gif-hero-image {
+    height: 85vh;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .gif-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .card {
+    text-decoration: none;
+  }
+
+  .description-text::before {
+    content: attr(data-substring);
+  }
+
+  .description-text {
+    position: relative;
+    overflow: hidden;
+    max-width: 400px;
+    max-height: 4.3em;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+  }
+</style>
+{{end}} {{define "content"}}
+{{$rooms := index .Data "rooms"}}
+<!-- Hero section Section -->
+<section class="col-md-12">
+  <img class="gif-hero-image"
+    src="static/images/image_processing.gif"
+    alt="Welcome animation">
+</section>
+
+<!-- About us section  -->
+<section class="container about-us">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Welcome to our Hotel</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non laborum
+        consequatur, unde nemo mollitia laboriosam? Fugiat, possimus dignissimos.
+        Veniam dolore dolorum est delectus error dolor porro magni praesentium quae
+        unde?
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non laborum
+        consequatur, unde nemo mollitia laboriosam? Fugiat, possimus dignissimos.
+        Veniam dolore dolorum est delectus error dolor porro magni praesentium quae
+        unde?
+      </p>
+      <a class="btn call-to-action-button mb-5 mb-md-0" href="/reservation" role="button">Book Now</a>
+    </div>
+
+    <div class="col-md-6">
+      <img class="gif-image"
+        src="https://res.cloudinary.com/prosper-dev/image/upload/v1682637665/b99b565b-5336-4cd2-b731-c64c24515600_rw_1200_maf5na.gif"
+        alt="Welcome animation">
+    </div>
+  </div>
+</section>
+
+<!-- Rooms Showcase  -->
+<section id="all-rooms" class="container rooms-showcase">
+  <div class="text-center">
+    <h2>Our Rooms</h2>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Non laborum
+      consequatur, unde nemo mollitia laboriosam? Fugiat, possimus dignissimos.
+      Veniam dolore dolorum est delectus error dolor porro magni praesentium quae
+      unde?
+    </p>
+  </div>
+
+  <div class="rooms-showcase-container">
+    {{range $rooms}}
+    <a href="/rooms/{{.ID}}" class="card border-0 me-lg-4 mb-4">
+      <div class="backgroundEffect"></div>
+      <div class="pic">
+        <img class="" src={{.ImageSource}} alt="Room image" />
+        <div class="date">
+          <span class="day">Hot</span>
+          <span class="year">Deal</span>
+        </div>
+      </div>
+      <div class="content">
+        <p class="h-1 mt-4">{{.RoomName}}</p>
+        <p id="description-text" class="text-muted mt-3 description-text">{{.Description}}</p>
+        <div class="d-flex align-items-center justify-content-between mt-3 pb-3">
+          <div class="btn btn-primary">
+            Book Now<span class="fas fa-arrow-right"></span>
+          </div>
+          <div class="d-flex align-items-center justify-content-center foot">
+            <p class="font-bold admin">${{.Price}}</p>
+            <p class="icon text-muted">per night</p>
+          </div>
+        </div>
+      </div>
+    </a>
+    {{end}}
+  </div>
+</section>
+{{end}} {{define "js"}}
+{{end}}
