@@ -4,8 +4,8 @@ import (
 	"html/template"
 	"log"
 
+	"github.com/aidisapp/MusiqCity/internal/models"
 	"github.com/alexedwards/scs/v2"
-	"github.com/atuprosper/booking-project/internal/models"
 )
 
 type AppConfig struct {

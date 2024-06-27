@@ -3,8 +3,8 @@ package dbrepo
 import (
 	"database/sql"
 
-	"github.com/atuprosper/booking-project/internal/config"
-	"github.com/atuprosper/booking-project/internal/repository"
+	"github.com/aidisapp/MusiqCity/internal/config"
+	"github.com/aidisapp/MusiqCity/internal/repository"
 )
 
 type postgresDBRepo struct {

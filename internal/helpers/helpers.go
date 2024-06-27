@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"runtime/debug"
 
-	"github.com/atuprosper/booking-project/internal/config"
+	"github.com/aidisapp/MusiqCity/internal/config"
 )
 
 var app *config.AppConfig

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/atuprosper/booking-project/internal/config"
+	"github.com/aidisapp/MusiqCity/internal/config"
 	"github.com/go-chi/chi/v5"
 )
 

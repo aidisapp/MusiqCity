@@ -32,7 +32,8 @@ MusiqCity is a comprehensive platform for booking musicians with key features in
 
 - Create your own Go mod file by running `go mod init your-project-name`
 - Replace all imports with your current Go mod name.
-- After making the necessary changes, run the app with `go run cmd/web/*.go` to install all third-party packages and start the server.
+- Run `go mod tidy` - to install all the packages
+- After making the necessary changes, run the app with `go run cmd/web/*.go`  and start the server.
 - Create your PostgreSQL database.
 - Set up the flags in `cmd/web/main.go` and `run.sh`.
 - Rename `.env.example` to `.env` and set up your environment variables.

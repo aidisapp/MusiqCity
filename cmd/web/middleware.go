@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/atuprosper/booking-project/internal/helpers"
+	"github.com/aidisapp/MusiqCity/internal/helpers"
 	"github.com/justinas/nosurf"
 )
 

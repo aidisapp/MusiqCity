@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/aidisapp/MusiqCity/internal/config"
+	"github.com/aidisapp/MusiqCity/internal/models"
 	"github.com/alexedwards/scs/v2"
-	"github.com/atuprosper/booking-project/internal/config"
-	"github.com/atuprosper/booking-project/internal/models"
 )
 
 var session *scs.SessionManager

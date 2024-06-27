@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/atuprosper/booking-project/internal/models"
+	"github.com/aidisapp/MusiqCity/internal/models"
 	"github.com/joho/godotenv"
 	sendinblue "github.com/sendinblue/APIv3-go-library/v2/lib"
 )

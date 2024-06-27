@@ -13,8 +13,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/atuprosper/booking-project/internal/driver"
-	"github.com/atuprosper/booking-project/internal/models"
+	"github.com/aidisapp/MusiqCity/internal/driver"
+	"github.com/aidisapp/MusiqCity/internal/models"
 )
 
 type postData struct {
@@ -974,7 +974,6 @@ func TestAdminDeleteReservation(t *testing.T) {
 		}
 	}
 }
-
 
 func getContext(request *http.Request) context.Context {
 	ctx, err := session.Load(request.Context(), request.Header.Get("X-Session"))

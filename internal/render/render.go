@@ -9,8 +9,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/atuprosper/booking-project/internal/config"
-	"github.com/atuprosper/booking-project/internal/models"
+	"github.com/aidisapp/MusiqCity/internal/config"
+	"github.com/aidisapp/MusiqCity/internal/models"
 	"github.com/justinas/nosurf"
 )
 

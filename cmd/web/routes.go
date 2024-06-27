@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/atuprosper/booking-project/internal/config"
-	"github.com/atuprosper/booking-project/internal/handlers"
+	"github.com/aidisapp/MusiqCity/internal/config"
+	"github.com/aidisapp/MusiqCity/internal/handlers"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )

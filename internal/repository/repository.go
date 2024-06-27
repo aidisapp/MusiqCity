@@ -3,7 +3,7 @@ package repository
 import (
 	"time"
 
-	"github.com/atuprosper/booking-project/internal/models"
+	"github.com/aidisapp/MusiqCity/internal/models"
 )
 
 type DatabaseRepo interface {

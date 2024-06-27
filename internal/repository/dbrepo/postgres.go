@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/atuprosper/booking-project/internal/models"
+	"github.com/aidisapp/MusiqCity/internal/models"
 	"golang.org/x/crypto/bcrypt"
 )
 

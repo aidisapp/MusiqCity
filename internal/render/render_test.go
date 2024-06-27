@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/atuprosper/booking-project/internal/models"
+	"github.com/aidisapp/MusiqCity/internal/models"
 )
 
 func TestAddDefaultData(test *testing.T) {

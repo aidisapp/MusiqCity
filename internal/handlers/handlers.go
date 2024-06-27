@@ -9,14 +9,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/atuprosper/booking-project/internal/config"
-	"github.com/atuprosper/booking-project/internal/driver"
-	"github.com/atuprosper/booking-project/internal/forms"
-	"github.com/atuprosper/booking-project/internal/helpers"
-	"github.com/atuprosper/booking-project/internal/models"
-	"github.com/atuprosper/booking-project/internal/render"
-	"github.com/atuprosper/booking-project/internal/repository"
-	"github.com/atuprosper/booking-project/internal/repository/dbrepo"
+	"github.com/aidisapp/MusiqCity/internal/config"
+	"github.com/aidisapp/MusiqCity/internal/driver"
+	"github.com/aidisapp/MusiqCity/internal/forms"
+	"github.com/aidisapp/MusiqCity/internal/helpers"
+	"github.com/aidisapp/MusiqCity/internal/models"
+	"github.com/aidisapp/MusiqCity/internal/render"
+	"github.com/aidisapp/MusiqCity/internal/repository"
+	"github.com/aidisapp/MusiqCity/internal/repository/dbrepo"
 	"github.com/go-chi/chi/v5"
 )
 

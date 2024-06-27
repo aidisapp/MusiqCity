@@ -11,10 +11,10 @@ import (
 	"testing"
 	"time"
 
+	"github.com/aidisapp/MusiqCity/internal/config"
+	"github.com/aidisapp/MusiqCity/internal/models"
+	"github.com/aidisapp/MusiqCity/internal/render"
 	"github.com/alexedwards/scs/v2"
-	"github.com/atuprosper/booking-project/internal/config"
-	"github.com/atuprosper/booking-project/internal/models"
-	"github.com/atuprosper/booking-project/internal/render"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/justinas/nosurf"
@@ -152,7 +152,7 @@ func NoSurf(next http.Handler) http.Handler {
 		Secure:   app.InProduction,
 		SameSite: http.SameSiteLaxMode,
 	})
-	
+
 	return csrfHandler
 }
 

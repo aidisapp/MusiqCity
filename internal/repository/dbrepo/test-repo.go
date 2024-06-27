@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/atuprosper/booking-project/internal/models"
+	"github.com/aidisapp/MusiqCity/internal/models"
 )
 
 func (repo *testDBRepo) AllUsers() bool {
