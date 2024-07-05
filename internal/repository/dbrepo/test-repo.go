@@ -151,3 +151,11 @@ func (repo *testDBRepo) GetTodoListByUserID(id int) ([]models.TodoList, error) {
 func (m *testDBRepo) DeleteTodo(id int) error {
 	return nil
 }
+
+
+//  --------Recent---------- //
+
+// Inserts a new Artist into the database
+func (repo *testDBRepo) CreateArtist(artist models.Artist) error {
+	return nil
+}

@@ -1088,3 +1088,64 @@ func (m *Repository) AdminDeleteTodo(w http.ResponseWriter, r *http.Request) {
 	m.App.Session.Put(r.Context(), "flash", "<strong>Successful!!!</strong><br><br> <p>Todo Deleted</p>")
 	http.Redirect(w, r, "/admin/todo-list", http.StatusSeeOther)
 }
+
+// Recent ------------------------------------------
+// This function POST the new room form and store them in the database
+func (m *Repository) PostAdminNewArtist(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	var artist models.Artist
+
+	artist.Name = r.Form.Get("artist_name")
+	artist.Genres = r.Form.Get("genres")
+	artist.Description = r.Form.Get("description")
+	artist.Phone = r.Form.Get("phone")
+	artist.Email = r.Form.Get("email")
+	artist.City = r.Form.Get("city")
+	artist.Facebook = r.Form.Get("facebook")
+	artist.Twitter = r.Form.Get("twitter")
+	artist.Youtube = r.Form.Get("youtube")
+	artist.Logo = r.Form.Get("logo")
+	artist.Banner = r.Form.Get("banner")
+	artist.FeaturedImage = r.Form.Get("featured_image")
+
+	// Form validations
+	form := forms.New(r.PostForm)
+	form.Required("artist_name", "genres", "price", "description", "phone", "email")
+	form.MinLength("artist_name", 5, 50)
+	form.MinLength("description", 5, 20000)
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["artist"] = artist
+		m.App.Session.Put(r.Context(), "error", "Invalid form input")
+		render.Template(w, r, "admin-new-artist.page.html", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
+	}
+
+	// Insert new artist here
+	err = m.DB.CreateArtist(artist)
+	if err != nil {
+		m.App.Session.Put(r.Context(), "error", "Can't insert new artist into database")
+		helpers.ServerError(w, err)
+		http.Redirect(w, r, "/admin/artists", http.StatusTemporaryRedirect)
+		return
+	}
+
+	m.App.Session.Put(r.Context(), "flash", "Artist Created Successfully!!!")
+	http.Redirect(w, r, "/admin/artists", http.StatusSeeOther)
+}
+
+// Handles the new-room route to create a new room
+func (m *Repository) AdminNewArtist(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "admin-new-artist.page.html", &models.TemplateData{
+		Form: forms.New(nil),
+	})
+}

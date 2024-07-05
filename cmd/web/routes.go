@@ -65,6 +65,11 @@ func routes(app *config.AppConfig) http.Handler {
 		mux.Get("/todo-list", handlers.Repo.AdminTodoList)
 		mux.Post("/todo-list", handlers.Repo.PostAdminTodoList)
 		mux.Get("/delete-todo/{id}", handlers.Repo.AdminDeleteTodo)
+
+		// Recent ----------
+		mux.Get("/artists", handlers.Repo.AdminAllRooms)
+		mux.Get("/artists/new-artist", handlers.Repo.AdminNewArtist)
+		mux.Post("/artists/new-artist", handlers.Repo.PostAdminNewArtist)
 	})
 
 	return mux

@@ -668,3 +668,21 @@ func (m *postgresDBRepo) DeleteTodo(id int) error {
 
 	return nil
 }
+
+//  --------Recent---------- //
+
+// Inserts a new Artist into the database
+func (repo *postgresDBRepo) CreateArtist(artist models.Artist) error {
+	context, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `insert into artists (name, genres, description, phone, email, city, facebook, twitter, youtube, logo, banner, featured_image, created_at, updated_at) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`
+
+	_, err := repo.DB.ExecContext(context, query, artist.Name, artist.Genres, artist.Description, artist.Phone, artist.Email, artist.City, artist.Facebook, artist.Twitter, artist.Youtube, artist.Logo, artist.Banner, artist.FeaturedImage, time.Now(), time.Now())
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

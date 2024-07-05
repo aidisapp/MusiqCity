@@ -83,3 +83,24 @@ type TodoList struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
+
+// ----------------Recent ---------------
+
+// Artist model
+type Artist struct {
+	ID            int
+	Name          string
+	Genres        string
+	Description   string
+	Phone         string
+	Email         string
+	City          string
+	Facebook      string
+	Twitter        string
+	Youtube       string
+	Logo          string
+	Banner        string
+	FeaturedImage string
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
+}

@@ -39,4 +39,8 @@ type DatabaseRepo interface {
 	DeleteTodo(id int) error
 
 	GetRestrictionsForCurrentRoom(roomID int, start, end time.Time) ([]models.RoomRestriction, error)
+
+
+
+	CreateArtist(artist models.Artist) error
 }
