@@ -152,8 +152,12 @@ func (m *testDBRepo) DeleteTodo(id int) error {
 	return nil
 }
 
-
 //  --------Recent---------- //
+
+func (m *testDBRepo) AllArtists() ([]models.Artist, error) {
+	var artists []models.Artist
+	return artists, nil
+}
 
 // Inserts a new Artist into the database
 func (repo *testDBRepo) CreateArtist(artist models.Artist) error {

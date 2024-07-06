@@ -40,7 +40,6 @@ type DatabaseRepo interface {
 
 	GetRestrictionsForCurrentRoom(roomID int, start, end time.Time) ([]models.RoomRestriction, error)
 
-
-
+	AllArtists() ([]models.Artist, error)
 	CreateArtist(artist models.Artist) error
 }

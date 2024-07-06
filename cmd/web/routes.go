@@ -67,9 +67,11 @@ func routes(app *config.AppConfig) http.Handler {
 		mux.Get("/delete-todo/{id}", handlers.Repo.AdminDeleteTodo)
 
 		// Recent ----------
-		mux.Get("/artists", handlers.Repo.AdminAllRooms)
+		mux.Get("/artists", handlers.Repo.AdminAllArtists)
 		mux.Get("/artists/new-artist", handlers.Repo.AdminNewArtist)
 		mux.Post("/artists/new-artist", handlers.Repo.PostAdminNewArtist)
+		mux.Get("/artists/{id}", handlers.Repo.AdminSingleRoom)
+		mux.Post("/artists/{id}", handlers.Repo.PostAdminSingleRoom)
 	})
 
 	return mux

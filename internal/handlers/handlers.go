@@ -1090,7 +1090,31 @@ func (m *Repository) AdminDeleteTodo(w http.ResponseWriter, r *http.Request) {
 }
 
 // Recent ------------------------------------------
-// This function POST the new room form and store them in the database
+
+// Handles the all-artists route
+func (m *Repository) AdminAllArtists(w http.ResponseWriter, r *http.Request) {
+	artists, err := m.DB.AllArtists()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["artists"] = artists
+
+	render.Template(w, r, "admin-all-artists.page.html", &models.TemplateData{
+		Data: data,
+	})
+}
+
+// Handles the new-artist route to create a new artist
+func (m *Repository) AdminNewArtist(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "admin-new-artist.page.html", &models.TemplateData{
+		Form: forms.New(nil),
+	})
+}
+
+// This function POST the new artist form and store them in the database
 func (m *Repository) PostAdminNewArtist(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
@@ -1115,7 +1139,7 @@ func (m *Repository) PostAdminNewArtist(w http.ResponseWriter, r *http.Request) 
 
 	// Form validations
 	form := forms.New(r.PostForm)
-	form.Required("artist_name", "genres", "price", "description", "phone", "email")
+	form.Required("artist_name", "genres", "description", "phone", "email")
 	form.MinLength("artist_name", 5, 50)
 	form.MinLength("description", 5, 20000)
 
@@ -1141,11 +1165,4 @@ func (m *Repository) PostAdminNewArtist(w http.ResponseWriter, r *http.Request) 
 
 	m.App.Session.Put(r.Context(), "flash", "Artist Created Successfully!!!")
 	http.Redirect(w, r, "/admin/artists", http.StatusSeeOther)
-}
-
-// Handles the new-room route to create a new room
-func (m *Repository) AdminNewArtist(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "admin-new-artist.page.html", &models.TemplateData{
-		Form: forms.New(nil),
-	})
 }

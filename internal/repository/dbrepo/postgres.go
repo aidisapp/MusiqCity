@@ -671,6 +671,53 @@ func (m *postgresDBRepo) DeleteTodo(id int) error {
 
 //  --------Recent---------- //
 
+// Get all rooms
+func (m *postgresDBRepo) AllArtists() ([]models.Artist, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var artists []models.Artist
+
+	query := `select id, name, genres, description, phone, email, city, facebook, twitter, youtube, logo, banner, featured_image, created_at, updated_at from artists order by created_at asc`
+
+	rows, err := m.DB.QueryContext(ctx, query)
+	if err != nil {
+		return artists, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var artist models.Artist
+		err := rows.Scan(
+			&artist.ID,
+			&artist.Name,
+			&artist.Genres,
+			&artist.Description,
+			&artist.Phone,
+			&artist.Email,
+			&artist.City,
+			&artist.Facebook,
+			&artist.Twitter,
+			&artist.Youtube,
+			&artist.Logo,
+			&artist.Banner,
+			&artist.FeaturedImage,
+			&artist.CreatedAt,
+			&artist.UpdatedAt,
+		)
+		if err != nil {
+			return artists, err
+		}
+		artists = append(artists, artist)
+	}
+
+	if err = rows.Err(); err != nil {
+		return artists, err
+	}
+
+	return artists, nil
+}
+
 // Inserts a new Artist into the database
 func (repo *postgresDBRepo) CreateArtist(artist models.Artist) error {
 	context, cancel := context.WithTimeout(context.Background(), 3*time.Second)
