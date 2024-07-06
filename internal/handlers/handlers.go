@@ -1166,3 +1166,88 @@ func (m *Repository) PostAdminNewArtist(w http.ResponseWriter, r *http.Request) 
 	m.App.Session.Put(r.Context(), "flash", "Artist Created Successfully!!!")
 	http.Redirect(w, r, "/admin/artists", http.StatusSeeOther)
 }
+
+// Handles the single-room route
+func (m *Repository) AdminSingleArtist(w http.ResponseWriter, r *http.Request) {
+	urlParams := strings.Split(r.RequestURI, "/")
+	id, err := strconv.Atoi(urlParams[3])
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	artist, err := m.DB.GetArtistByID(id)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["artist"] = artist
+
+	render.Template(w, r, "admin-single-artist.page.html", &models.TemplateData{
+		Data: data,
+		Form: forms.New(nil),
+	})
+}
+
+// Handles the single-artist route for POST
+func (m *Repository) PostAdminSingleArtist(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	urlParams := strings.Split(r.RequestURI, "/")
+	id, err := strconv.Atoi(urlParams[3])
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	artist, err := m.DB.GetArtistByID(id)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	artist.Name = r.Form.Get("artist_name")
+	artist.Genres = r.Form.Get("genres")
+	artist.Description = r.Form.Get("description")
+	artist.Phone = r.Form.Get("phone")
+	artist.Email = r.Form.Get("email")
+	artist.City = r.Form.Get("city")
+	artist.Facebook = r.Form.Get("facebook")
+	artist.Twitter = r.Form.Get("twitter")
+	artist.Youtube = r.Form.Get("youtube")
+	artist.Logo = r.Form.Get("logo")
+	artist.Banner = r.Form.Get("banner")
+	artist.FeaturedImage = r.Form.Get("featured_image")
+
+	form := forms.New(r.PostForm)
+	form.Required("artist_name", "genres", "description", "phone", "email")
+	form.MinLength("artist_name", 5, 50)
+	form.MinLength("description", 5, 20000)
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["artist"] = artist
+		m.App.Session.Put(r.Context(), "error", "Invalid inputs")
+		render.Template(w, r, "admin-single-artist.page.html", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+
+		return
+	}
+
+	err = m.DB.UpdateArtist(artist)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	m.App.Session.Put(r.Context(), "flash", "Artist Updated Successsfully!!!")
+	http.Redirect(w, r, "/admin/artists", http.StatusSeeOther)
+}

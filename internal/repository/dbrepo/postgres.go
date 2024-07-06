@@ -733,3 +733,74 @@ func (repo *postgresDBRepo) CreateArtist(artist models.Artist) error {
 
 	return nil
 }
+
+// Get an artist by id
+func (repo *postgresDBRepo) GetArtistByID(id int) (models.Artist, error) {
+	context, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var artist models.Artist
+
+	query := `
+		select id, name, genres, description, phone, email, city, facebook, twitter, youtube, logo, banner, featured_image, created_at, updated_at from artists where id = $1
+	`
+
+	row := repo.DB.QueryRowContext(context, query, id)
+	err := row.Scan(
+		&artist.ID,
+		&artist.Name,
+		&artist.Genres,
+		&artist.Description,
+		&artist.Phone,
+		&artist.Email,
+		&artist.City,
+		&artist.Facebook,
+		&artist.Twitter,
+		&artist.Youtube,
+		&artist.Logo,
+		&artist.Banner,
+		&artist.FeaturedImage,
+		&artist.CreatedAt,
+		&artist.UpdatedAt,
+	)
+
+	if err != nil {
+		return artist, err
+	}
+
+	return artist, nil
+}
+
+// UpdateArtist updates an artist in the database
+func (m *postgresDBRepo) UpdateArtist(artist models.Artist) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
+		update artists set name = $1, genres = $2, description = $3, phone = $4, email = $5, city = $6, facebook = $7, twitter = $8, youtube = $9, logo = $10, banner = $11, featured_image = $12, updated_at = $13
+		where id = $14		
+	`
+
+	_, err := m.DB.ExecContext(ctx, query,
+		artist.Name,
+		artist.Genres,
+		artist.Description,
+		artist.Phone,
+		artist.Email,
+		artist.City,
+		artist.Facebook,
+		artist.Twitter,
+		artist.Youtube,
+		artist.Logo,
+		artist.Banner,
+		artist.FeaturedImage,
+		time.Now(),
+		artist.ID,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

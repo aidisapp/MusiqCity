@@ -42,4 +42,6 @@ type DatabaseRepo interface {
 
 	AllArtists() ([]models.Artist, error)
 	CreateArtist(artist models.Artist) error
+	GetArtistByID(id int) (models.Artist, error)
+	UpdateArtist(artist models.Artist) error
 }

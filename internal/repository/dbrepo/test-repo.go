@@ -163,3 +163,13 @@ func (m *testDBRepo) AllArtists() ([]models.Artist, error) {
 func (repo *testDBRepo) CreateArtist(artist models.Artist) error {
 	return nil
 }
+
+func (repo *testDBRepo) GetArtistByID(id int) (models.Artist, error) {
+	var artist models.Artist
+
+	return artist, nil
+}
+
+func (m *testDBRepo) UpdateArtist(artist models.Artist) error {
+	return nil
+}
