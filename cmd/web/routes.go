@@ -75,6 +75,9 @@ func routes(app *config.AppConfig) http.Handler {
 
 		mux.Get("/all-bookings", handlers.Repo.AdminAllBookings)
 		mux.Get("/new-bookings", handlers.Repo.AdminNewBookings)
+
+		mux.Get("/booking-options", handlers.Repo.AdminAllOptions)
+		mux.Get("/booking-options/new-option", handlers.Repo.AdminNewOption)
 	})
 
 	return mux

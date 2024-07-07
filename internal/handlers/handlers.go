@@ -458,11 +458,13 @@ func (m *Repository) Login(w http.ResponseWriter, r *http.Request) {
 // This function handles user details and authentication
 func (m *Repository) PostLogin(w http.ResponseWriter, r *http.Request) {
 	// Check if user is already logged in
+	_ = m.App.Session.Destroy(r.Context())
+
 	if m.App.Session.Exists(r.Context(), "user_id") {
 		// User is already logged in, you might want to log them out first
 		_ = m.App.Session.Destroy(r.Context())
 		m.App.Session.Put(r.Context(), "warning", "You have been logged out for a new login attempt")
-}
+	}
 
 	// Allways renew the token in seesion for login or logout
 	_ = m.App.Session.RenewToken(r.Context())
@@ -1288,5 +1290,28 @@ func (m *Repository) AdminNewBookings(w http.ResponseWriter, r *http.Request) {
 
 	render.Template(w, r, "admin-new-bookings.page.html", &models.TemplateData{
 		Data: data,
+	})
+}
+
+// Handles the all-artists route
+func (m *Repository) AdminAllOptions(w http.ResponseWriter, r *http.Request) {
+	artists, err := m.DB.AllArtists()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["artists"] = artists
+
+	render.Template(w, r, "admin-all-options.page.html", &models.TemplateData{
+		Data: data,
+	})
+}
+
+// Handles the new-artist route to create a new artist
+func (m *Repository) AdminNewOption(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "admin-new-option.page.html", &models.TemplateData{
+		Form: forms.New(nil),
 	})
 }
