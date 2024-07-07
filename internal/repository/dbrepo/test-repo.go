@@ -176,7 +176,7 @@ func (m *testDBRepo) UpdateArtist(artist models.Artist) error {
 
 // AllBookingss returns a slice of all bookings
 func (repo *testDBRepo) AllBookings() ([]models.Bookings, error) {
-	var bookings []models.Bookings	
+	var bookings []models.Bookings
 	return bookings, nil
 }
 
@@ -184,4 +184,21 @@ func (repo *testDBRepo) AllBookings() ([]models.Bookings, error) {
 func (m *testDBRepo) AllNewBookings() ([]models.Bookings, error) {
 	var bookings []models.Bookings
 	return bookings, nil
+}
+
+// Get all Booking Options
+func (m *testDBRepo) AllBookingOptions() ([]models.BookingOptions, error) {
+	var options []models.BookingOptions
+	return options, nil
+}
+
+// Inserts a new Boking Option into the database
+func (repo *testDBRepo) CreateBookingOption(option models.BookingOptions) error {
+	return nil
+}
+
+// Get a booking option by id
+func (repo *testDBRepo) GetBookingOptionByID(id int) (models.BookingOptions, error) {
+	var option models.BookingOptions
+	return option, nil
 }

@@ -1295,14 +1295,14 @@ func (m *Repository) AdminNewBookings(w http.ResponseWriter, r *http.Request) {
 
 // Handles the all-artists route
 func (m *Repository) AdminAllOptions(w http.ResponseWriter, r *http.Request) {
-	artists, err := m.DB.AllArtists()
+	options, err := m.DB.AllBookingOptions()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
 
 	data := make(map[string]interface{})
-	data["artists"] = artists
+	data["options"] = options
 
 	render.Template(w, r, "admin-all-options.page.html", &models.TemplateData{
 		Data: data,

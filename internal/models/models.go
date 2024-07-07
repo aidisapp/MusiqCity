@@ -115,8 +115,19 @@ type Bookings struct {
 	StartDate time.Time
 	EndDate   time.Time
 	Processed int
-	ArtistID  int	
-	Artist    Artist	
+	ArtistID  int
+	Artist    Artist
 	CreatedAt time.Time
 	UpdatedAt time.Time
+}
+
+// Booking options model
+type BookingOptions struct {
+	ID          int
+	Title       string
+	Description string
+	Price       string
+	ArtistID    int
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }

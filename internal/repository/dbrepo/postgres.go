@@ -671,7 +671,7 @@ func (m *postgresDBRepo) DeleteTodo(id int) error {
 
 //  --------Recent---------- //
 
-// Get all rooms
+// Get all artists
 func (m *postgresDBRepo) AllArtists() ([]models.Artist, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -916,4 +916,88 @@ func (m *postgresDBRepo) AllNewBookings() ([]models.Bookings, error) {
 	}
 
 	return bookings, nil
+}
+
+// Get all Booking Options
+func (m *postgresDBRepo) AllBookingOptions() ([]models.BookingOptions, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var options []models.BookingOptions
+
+	query := `select id, title, description, price, artist_id, created_at, updated_at from booking_options order by created_at asc`
+
+	rows, err := m.DB.QueryContext(ctx, query)
+	if err != nil {
+		return options, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var option models.BookingOptions
+		err := rows.Scan(
+			&option.ID,
+			&option.Title,
+			&option.Description,
+			&option.Price,
+			&option.ArtistID,
+			&option.CreatedAt,
+			&option.UpdatedAt,
+		)
+		if err != nil {
+			return options, err
+		}
+		options = append(options, option)
+	}
+
+	if err = rows.Err(); err != nil {
+		return options, err
+	}
+
+	return options, nil
+}
+
+// Inserts a new Boking Option into the database
+func (repo *postgresDBRepo) CreateBookingOption(option models.BookingOptions) error {
+	context, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `insert into booking_options (title, description, price, artist_id, created_at, updated_at) values ($1, $2, $3, $4, $5, $6)`
+
+	_, err := repo.DB.ExecContext(context, query, option.Title, option.Description, option.Price, option.ArtistID, time.Now(), time.Now())
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Get a booking option by id
+func (repo *postgresDBRepo) GetBookingOptionByID(id int) (models.BookingOptions, error) {
+	context, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var option models.BookingOptions
+
+	query := `
+		select id, title, description, price, artist_id, created_at, updated_at from booking_options where id = $1
+	`
+
+	row := repo.DB.QueryRowContext(context, query, id)
+	err := row.Scan(
+		&option.ID,
+		&option.Title,
+		&option.Description,
+		&option.Price,
+		&option.ArtistID,
+		&option.CreatedAt,
+		&option.UpdatedAt,
+	)
+
+	if err != nil {
+		return option, err
+	}
+
+	return option, nil
 }
