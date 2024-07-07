@@ -44,4 +44,7 @@ type DatabaseRepo interface {
 	CreateArtist(artist models.Artist) error
 	GetArtistByID(id int) (models.Artist, error)
 	UpdateArtist(artist models.Artist) error
+
+	AllBookings() ([]models.Bookings, error)
+	AllNewBookings() ([]models.Bookings, error)
 }

@@ -1251,3 +1251,35 @@ func (m *Repository) PostAdminSingleArtist(w http.ResponseWriter, r *http.Reques
 	m.App.Session.Put(r.Context(), "flash", "Artist Updated Successsfully!!!")
 	http.Redirect(w, r, "/admin/artists", http.StatusSeeOther)
 }
+
+// Handles the all-bookings route
+func (m *Repository) AdminAllBookings(w http.ResponseWriter, r *http.Request) {
+	bookings, err := m.DB.AllBookings()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["bookings"] = bookings
+
+	render.Template(w, r, "admin-all-bookings.page.html", &models.TemplateData{
+		Data: data,
+	})
+}
+
+// Handles the new-reservations route
+func (m *Repository) AdminNewBookings(w http.ResponseWriter, r *http.Request) {
+	bookings, err := m.DB.AllNewBookings()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["bookings"] = bookings
+
+	render.Template(w, r, "admin-new-bookings.page.html", &models.TemplateData{
+		Data: data,
+	})
+}

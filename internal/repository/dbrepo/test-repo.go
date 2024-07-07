@@ -173,3 +173,15 @@ func (repo *testDBRepo) GetArtistByID(id int) (models.Artist, error) {
 func (m *testDBRepo) UpdateArtist(artist models.Artist) error {
 	return nil
 }
+
+// AllBookingss returns a slice of all bookings
+func (repo *testDBRepo) AllBookings() ([]models.Bookings, error) {
+	var bookings []models.Bookings	
+	return bookings, nil
+}
+
+// AllNewBookings returns a slice of all Bookings
+func (m *testDBRepo) AllNewBookings() ([]models.Bookings, error) {
+	var bookings []models.Bookings
+	return bookings, nil
+}

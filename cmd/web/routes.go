@@ -72,6 +72,9 @@ func routes(app *config.AppConfig) http.Handler {
 		mux.Post("/artists/new-artist", handlers.Repo.PostAdminNewArtist)
 		mux.Get("/artists/{id}", handlers.Repo.AdminSingleArtist)
 		mux.Post("/artists/{id}", handlers.Repo.PostAdminSingleArtist)
+
+		mux.Get("/all-bookings", handlers.Repo.AdminAllBookings)
+		mux.Get("/new-bookings", handlers.Repo.AdminNewBookings)
 	})
 
 	return mux

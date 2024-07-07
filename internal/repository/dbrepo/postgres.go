@@ -804,3 +804,116 @@ func (m *postgresDBRepo) UpdateArtist(artist models.Artist) error {
 
 	return nil
 }
+
+// AllBookingss returns a slice of all bookings
+func (repo *postgresDBRepo) AllBookings() ([]models.Bookings, error) {
+	context, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var bookings []models.Bookings
+
+	query := `
+		select b.id, b.first_name, b.last_name, b.email, b.phone, b.start_date, 
+		b.end_date, b.processed, b.artist_id, b.created_at, b.updated_at,
+		ar.id, ar.name, ar.genres, ar.description, ar.city
+		from bookings b
+		left join artists ar on (b.artist_id = ar.id)
+		order by b.start_date asc
+	`
+
+	rows, err := repo.DB.QueryContext(context, query)
+	if err != nil {
+		return bookings, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var i models.Bookings
+		err := rows.Scan(
+			&i.ID,
+			&i.FirstName,
+			&i.LastName,
+			&i.Email,
+			&i.Phone,
+			&i.StartDate,
+			&i.EndDate,
+			&i.Processed,
+			&i.ArtistID,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.Artist.ID,
+			&i.Artist.Name,
+			&i.Artist.Genres,
+			&i.Artist.Description,
+			&i.Artist.City,
+		)
+
+		if err != nil {
+			return bookings, err
+		}
+		bookings = append(bookings, i)
+	}
+
+	if err = rows.Err(); err != nil {
+		return bookings, err
+	}
+
+	return bookings, nil
+}
+
+// AllNewBookings returns a slice of all Bookings
+func (m *postgresDBRepo) AllNewBookings() ([]models.Bookings, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var bookings []models.Bookings
+
+	query := `
+		select b.id, b.first_name, b.last_name, b.email, b.phone, b.start_date, 
+		b.end_date, b.processed, b.artist_id, b.created_at, b.updated_at,
+		ar.id, ar.name, ar.genres, ar.description, ar.city
+		from bookings b
+		left join artists ar on (b.artist_id = ar.id)
+		where processed = 0
+		order by b.start_date asc
+	`
+
+	rows, err := m.DB.QueryContext(ctx, query)
+	if err != nil {
+		return bookings, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var i models.Bookings
+		err := rows.Scan(
+			&i.ID,
+			&i.FirstName,
+			&i.LastName,
+			&i.Email,
+			&i.Phone,
+			&i.StartDate,
+			&i.EndDate,
+			&i.Processed,
+			&i.ArtistID,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.Artist.ID,
+			&i.Artist.Name,
+			&i.Artist.Genres,
+			&i.Artist.Description,
+			&i.Artist.City,
+		)
+
+		if err != nil {
+			return bookings, err
+		}
+		bookings = append(bookings, i)
+	}
+
+	if err = rows.Err(); err != nil {
+		return bookings, err
+	}
+
+	return bookings, nil
+}

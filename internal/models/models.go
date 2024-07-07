@@ -96,11 +96,27 @@ type Artist struct {
 	Email         string
 	City          string
 	Facebook      string
-	Twitter        string
+	Twitter       string
 	Youtube       string
 	Logo          string
 	Banner        string
 	FeaturedImage string
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
+}
+
+// Bookings model
+type Bookings struct {
+	ID        int
+	FirstName string
+	LastName  string
+	Email     string
+	Phone     string
+	StartDate time.Time
+	EndDate   time.Time
+	Processed int
+	ArtistID  int	
+	Artist    Artist	
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
