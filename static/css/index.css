@@ -24,13 +24,13 @@ body {
 }
 
 .call-to-action-button {
-    background-color: #7431f8;
+    background-color: #DD3938;
     color: white;
     margin-top: 1.2rem;
 }
 
 .call-to-action-button:hover {
-    border: 1px solid #7431f8;
+    border: 1px solid #DD3938;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
@@ -86,7 +86,7 @@ body {
     width: 100%;
     position: absolute;
     z-index: -1;
-    background: #7431f8;
+    background: #DD3938;
     animation: popBackground 0.3s ease-in;
 }
 
@@ -133,7 +133,7 @@ body {
     justify-content: center;
     width: 50px;
     height: 70px;
-    background-color: #7431f8;
+    background-color: #DD3938;
     color: white;
     position: absolute;
     bottom: 0px;
@@ -167,7 +167,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 5px 10px;
-    background-color: #7431f8;
+    background-color: #DD3938;
     border-radius: 25px;
     font-size: 12px;
     border: none;
@@ -175,7 +175,7 @@ body {
 
 .card:hover .content .btn {
     background: #fff;
-    color: #7431f8;
+    color: #DD3938;
     box-shadow: #0000001a 0px 3px 5px;
 }
 
@@ -185,7 +185,7 @@ body {
 }
 
 .card .content .foot .admin {
-    color: #7431f8;
+    color: #DD3938;
     font-size: 20px;
     margin-right: 4px;
 }

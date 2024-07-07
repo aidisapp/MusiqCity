@@ -15,13 +15,13 @@ body {
 }
 
 .call-to-action-button {
-    background-color: #7431f8;
+    background-color: #DD3938;
     color: white;
     margin-top: 1.2rem;
 }
 
 .call-to-action-button:hover {
-    border: 1px solid #7431f8;
+    border: 1px solid #DD3938;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 

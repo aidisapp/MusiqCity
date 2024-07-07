@@ -166,7 +166,7 @@
         datasets: [
           {
             data: [100, 50, 50],
-            backgroundColor: ["#71c016", "#8caaff", "#7431f8"],
+            backgroundColor: ["#71c016", "#8caaff", "#DD3938"],
             borderColor: "rgba(0,0,0,0)",
           },
         ],
