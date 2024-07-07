@@ -457,6 +457,13 @@ func (m *Repository) Login(w http.ResponseWriter, r *http.Request) {
 
 // This function handles user details and authentication
 func (m *Repository) PostLogin(w http.ResponseWriter, r *http.Request) {
+	// Check if user is already logged in
+	if m.App.Session.Exists(r.Context(), "user_id") {
+		// User is already logged in, you might want to log them out first
+		_ = m.App.Session.Destroy(r.Context())
+		m.App.Session.Put(r.Context(), "warning", "You have been logged out for a new login attempt")
+}
+
 	// Allways renew the token in seesion for login or logout
 	_ = m.App.Session.RenewToken(r.Context())
 
