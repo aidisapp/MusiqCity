@@ -24,6 +24,7 @@
 <!-- partial -->
 <div class="main-panel">
   {{$option := index .Data "option"}}
+  {{$artists := index .Data "artists"}}
   <div class="content-wrapper">
     <div class="row">
       <div class="col-md-12 grid-margin">
@@ -46,13 +47,23 @@
             </div>
           </div>
 
-          <div class="col-md-6">
+          <div class="col-md-6 my-3">
             <label for="price" class="form-label">Price (Add currency symbol before the price)</label>
             <input type="text" class='form-control {{with .Form.Errors.Get
               "price"}} is-invalid {{end}}' id="price" name="price" value="{{$option.Price}}" required />
             <div class="invalid-feedback">
               {{with .Form.Errors.Get "price"}} {{.}} {{end}}
             </div>
+          </div>
+
+          <div class="col-md-6 my-1 form-group">
+            <label class="mr-sm-2" for="inlineFormCustomSelect">Select Artist</label>
+            <select class="custom-select form-control mr-sm-2" id="inlineFormCustomSelect" name="artist_id">
+              <option selected>Choose...</option>
+              {{range $artists}}
+                <option value="{{.ID}}">{{.Name}}</option>              
+              {{end}}
+            </select>
           </div>
 
           <div class="col-md-12">

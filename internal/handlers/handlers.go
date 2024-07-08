@@ -457,16 +457,7 @@ func (m *Repository) Login(w http.ResponseWriter, r *http.Request) {
 
 // This function handles user details and authentication
 func (m *Repository) PostLogin(w http.ResponseWriter, r *http.Request) {
-	// Check if user is already logged in
 	_ = m.App.Session.Destroy(r.Context())
-
-	if m.App.Session.Exists(r.Context(), "user_id") {
-		// User is already logged in, you might want to log them out first
-		_ = m.App.Session.Destroy(r.Context())
-		m.App.Session.Put(r.Context(), "warning", "You have been logged out for a new login attempt")
-	}
-
-	// Allways renew the token in seesion for login or logout
 	_ = m.App.Session.RenewToken(r.Context())
 
 	err := r.ParseForm()
@@ -1311,7 +1302,152 @@ func (m *Repository) AdminAllOptions(w http.ResponseWriter, r *http.Request) {
 
 // Handles the new-artist route to create a new artist
 func (m *Repository) AdminNewOption(w http.ResponseWriter, r *http.Request) {
+	artists, err := m.DB.AllArtists()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["artists"] = artists
+
 	render.Template(w, r, "admin-new-option.page.html", &models.TemplateData{
 		Form: forms.New(nil),
+		Data: data,
 	})
+}
+
+// This function POST the new artist form and store them in the database
+func (m *Repository) PostAdminNewOption(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	var option models.BookingOptions
+
+	option.Title = r.Form.Get("title")
+	option.Price = r.Form.Get("price")
+	option.Description = r.Form.Get("description")
+	artistIDStr := r.Form.Get("artist_id")
+	artistID, err := strconv.Atoi(artistIDStr)
+	if err != nil {
+		log.Printf("Error converting artist_id to integer: %v", err)
+	} else {
+		option.ArtistID = artistID
+	}
+
+	// Form validations
+	form := forms.New(r.PostForm)
+	form.Required("title", "price", "description", "artist_id")
+	form.MinLength("title", 5, 50)
+	form.MinLength("description", 5, 20000)
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["option"] = option
+		m.App.Session.Put(r.Context(), "error", "Invalid form input")
+		render.Template(w, r, "admin-new-option.page.html", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
+	}
+
+	// Insert new artist here
+	err = m.DB.CreateBookingOption(option)
+	if err != nil {
+		m.App.Session.Put(r.Context(), "error", "Can't insert new booking option into database")
+		helpers.ServerError(w, err)
+		http.Redirect(w, r, "/admin/booking-options/new-option", http.StatusTemporaryRedirect)
+		return
+	}
+
+	m.App.Session.Put(r.Context(), "flash", "Booking Option Created Successfully!!!")
+	http.Redirect(w, r, "/admin/booking-options/new-option", http.StatusSeeOther)
+}
+
+func (m *Repository) AdminSingleOption(w http.ResponseWriter, r *http.Request) {
+	urlParams := strings.Split(r.RequestURI, "/")
+	id, err := strconv.Atoi(urlParams[3])
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	artist, err := m.DB.GetArtistByID(id)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["artist"] = artist
+
+	render.Template(w, r, "admin-single-artist.page.html", &models.TemplateData{
+		Data: data,
+		Form: forms.New(nil),
+	})
+}
+
+// Handles the single-artist route for POST
+func (m *Repository) PostAdminSingleOption(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	urlParams := strings.Split(r.RequestURI, "/")
+	id, err := strconv.Atoi(urlParams[3])
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	artist, err := m.DB.GetArtistByID(id)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	artist.Name = r.Form.Get("artist_name")
+	artist.Genres = r.Form.Get("genres")
+	artist.Description = r.Form.Get("description")
+	artist.Phone = r.Form.Get("phone")
+	artist.Email = r.Form.Get("email")
+	artist.City = r.Form.Get("city")
+	artist.Facebook = r.Form.Get("facebook")
+	artist.Twitter = r.Form.Get("twitter")
+	artist.Youtube = r.Form.Get("youtube")
+	artist.Logo = r.Form.Get("logo")
+	artist.Banner = r.Form.Get("banner")
+	artist.FeaturedImage = r.Form.Get("featured_image")
+
+	form := forms.New(r.PostForm)
+	form.Required("artist_name", "genres", "description", "phone", "email")
+	form.MinLength("artist_name", 5, 50)
+	form.MinLength("description", 5, 20000)
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["artist"] = artist
+		m.App.Session.Put(r.Context(), "error", "Invalid inputs")
+		render.Template(w, r, "admin-single-artist.page.html", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+
+		return
+	}
+
+	err = m.DB.UpdateArtist(artist)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	m.App.Session.Put(r.Context(), "flash", "Artist Updated Successsfully!!!")
+	http.Redirect(w, r, "/admin/artists", http.StatusSeeOther)
 }

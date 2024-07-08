@@ -12,13 +12,13 @@ import (
 
 // Authenticate authenticates a user
 func (repo *postgresDBRepo) Authenticate(email, testPassword string) (int, string, error) {
-	context, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	var id int
 	var hashedPassword string
 
-	row := repo.DB.QueryRowContext(context, "select id, password from users where email = $1", email)
+	row := repo.DB.QueryRowContext(ctx, "SELECT id, password FROM users WHERE email = $1", email)
 	err := row.Scan(&id, &hashedPassword)
 	if err != nil {
 		return id, "", err
