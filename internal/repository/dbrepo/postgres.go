@@ -1001,3 +1001,29 @@ func (repo *postgresDBRepo) GetBookingOptionByID(id int) (models.BookingOptions,
 
 	return option, nil
 }
+
+// UpdateBookingOption updates an option in the database
+func (m *postgresDBRepo) UpdateBookingOption(option models.BookingOptions) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
+		update booking_options set title = $1, description = $2, price = $3, artist_id = $4, updated_at = $5
+		where id = $6
+	`
+
+	_, err := m.DB.ExecContext(ctx, query,
+		option.Title,
+		option.Description,
+		option.Price,
+		option.ArtistID,
+		time.Now(),
+		option.ID,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

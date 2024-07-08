@@ -51,4 +51,5 @@ type DatabaseRepo interface {
 	AllBookingOptions() ([]models.BookingOptions, error)
 	CreateBookingOption(option models.BookingOptions) error
 	GetBookingOptionByID(id int) (models.BookingOptions, error)
+	UpdateBookingOption(option models.BookingOptions) error
 }

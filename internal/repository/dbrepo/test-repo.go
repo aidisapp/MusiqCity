@@ -202,3 +202,7 @@ func (repo *testDBRepo) GetBookingOptionByID(id int) (models.BookingOptions, err
 	var option models.BookingOptions
 	return option, nil
 }
+
+func (m *testDBRepo) UpdateBookingOption(option models.BookingOptions) error {
+	return nil
+}
