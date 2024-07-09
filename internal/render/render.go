@@ -19,6 +19,7 @@ var functions = template.FuncMap{
 	"formatDate": FormatDate,
 	"iterate":    Iterate,
 	"add":        Add,
+	"truncate":  Truncate,
 }
 
 var app *config.AppConfig
@@ -47,6 +48,13 @@ func Iterate(count int) []int {
 
 func HumanDate(t time.Time) string {
 	return t.Format("2006-01-02")
+}
+
+func Truncate(s string, length int) string {
+	if len(s) > length {
+			return s[:length] + "..."
+	}
+	return s
 }
 
 func FormatDate(t time.Time, f string) string {

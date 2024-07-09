@@ -4,123 +4,31 @@
 {{end}} {{define "content"}}
 
 <main>
+  {{$artists := index .Data "artists"}}
+
   <!-- Brand Song Area Start Here  -->
   <section class="ms-song-area pt-40 pb-40">
     <div class="container-fluid ms-maw-1710">
       <div class="swiper-container ms-song-active fix">
         <div class="swiper-wrapper">
+          {{range $artists}}
           <div class="swiper-slide">
             <div class="ms-song-item">
               <div class="ms-song-img p-relative">
-                <a href="genres-details.html"
-                  ><img src="/static/client/img/brand-song/01.png" alt="brand-song"
+                <a href="/artists/{{.ID}}"
+                  ><img src="{{.Logo}}" alt="brand-song"
                 /></a>
-                <span class="ms-song-num">01</span>
+                <span class="ms-song-num">{{.ID}}</span>
               </div>
               <div class="ms-song-content">
-                <h3 class="ms-song-title">
-                  <a href="genres-details.html">Arcade Fire</a>
+                <h3 class="ms-song-title reduce-text">
+                  <a href="/artists/{{.ID}}">{{truncate .Name 20}}</a>
                 </h3>
-                <span class="ms-song-text">Canadian rock group</span>
+                <span class="ms-song-text reduce-text">{{truncate .Genres 20}}</span>
               </div>
             </div>
           </div>
-          <div class="swiper-slide">
-            <div class="ms-song-item">
-              <div class="ms-song-img p-relative">
-                <a href="genres-details.html"
-                  ><img src="/static/client/img/brand-song/02.png" alt="brand-song"
-                /></a>
-                <span class="ms-song-num">02</span>
-              </div>
-              <div class="ms-song-content">
-                <h3 class="ms-song-title">
-                  <a href="genres-details.html">Beastie Boys</a>
-                </h3>
-                <span class="ms-song-text">American hip-hop</span>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="ms-song-item">
-              <div class="ms-song-img p-relative">
-                <a href="genres-details.html"
-                  ><img src="/static/client/img/brand-song/03.png" alt="brand-song"
-                /></a>
-                <span class="ms-song-num">03</span>
-              </div>
-              <div class="ms-song-content">
-                <h3 class="ms-song-title">
-                  <a href="genres-details.html">Blondie</a>
-                </h3>
-                <span class="ms-song-text">American rock group</span>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="ms-song-item">
-              <div class="ms-song-img p-relative">
-                <a href="genres-details.html"
-                  ><img src="/static/client/img/brand-song/04.png" alt="brand-song"
-                /></a>
-                <span class="ms-song-num">04</span>
-              </div>
-              <div class="ms-song-content">
-                <h3 class="ms-song-title">
-                  <a href="genres-details.html">Black Sabbath</a>
-                </h3>
-                <span class="ms-song-text">British rock group</span>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="ms-song-item">
-              <div class="ms-song-img p-relative">
-                <a href="genres-details.html"
-                  ><img src="/static/client/img/brand-song/05.png" alt="brand-song"
-                /></a>
-                <span class="ms-song-num">05</span>
-              </div>
-              <div class="ms-song-content">
-                <h3 class="ms-song-title">
-                  <a href="genres-details.html">Boy II Men</a>
-                </h3>
-                <span class="ms-song-text">Hong Kong Folk</span>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="ms-song-item">
-              <div class="ms-song-img p-relative">
-                <a href="genres-details.html"
-                  ><img src="/static/client/img/brand-song/06.png" alt="brand-song"
-                /></a>
-                <span class="ms-song-num">06</span>
-              </div>
-              <div class="ms-song-content">
-                <h3 class="ms-song-title">
-                  <a href="genres-details.html">The Coasters</a>
-                </h3>
-                <span class="ms-song-text">Canada band group</span>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="ms-song-item">
-              <div class="ms-song-img p-relative">
-                <a href="genres-details.html"
-                  ><img src="/static/client/img/brand-song/07.png" alt="brand-song"
-                /></a>
-                <span class="ms-song-num">07</span>
-              </div>
-              <div class="ms-song-content">
-                <h3 class="ms-song-title">
-                  <a href="genres-details.html">The Flamingos</a>
-                </h3>
-                <span class="ms-song-text">Chicago rock group</span>
-              </div>
-            </div>
-          </div>
+          {{end}}
         </div>
       </div>
     </div>
@@ -949,7 +857,10 @@
           <div class="work__thumb-wrapper d-inline-block p-relative mb-60">
             <div class="work__thumb-inner">
               <div class="work__thumb">
-                <img src="/static/client/img/work/work-thumb-01.png" alt="work image" />
+                <img
+                  src="/static/client/img/work/work-thumb-01.png"
+                  alt="work image"
+                />
               </div>
               <div class="work__small-thumb">
                 <div class="work__thumb">
@@ -974,7 +885,10 @@
                 </div>
                 <div class="card__button">
                   <a class="card__btn" href="#">
-                    <img src="/static/client/img/work/star.png" alt="work icon" />
+                    <img
+                      src="/static/client/img/work/star.png"
+                      alt="work icon"
+                    />
                     <span>Trustpilot</span>
                   </a>
                 </div>
@@ -1398,7 +1312,10 @@
                   </div>
                 </div>
                 <div class="work__features-arrow">
-                  <img src="/static/client/img/work/arrow.png" alt="image not found" />
+                  <img
+                    src="/static/client/img/work/arrow.png"
+                    alt="image not found"
+                  />
                 </div>
               </div>
             </div>
@@ -2191,7 +2108,10 @@
         <div class="col-xl-4">
           <div class="ms-event-play d-inline-block w-img p-relative mb-60">
             <div class="ms-event-play-overlay p-absolute"></div>
-            <img src="/static/client/img/event/event-bg-2.png" alt="event img" />
+            <img
+              src="/static/client/img/event/event-bg-2.png"
+              alt="event img"
+            />
             <a
               href="https://www.youtube.com/watch?v=Rf9flQISwok"
               class="ms-play-border ms-event-play-btn popup-video"
@@ -2357,7 +2277,9 @@
             <a class="ms-news4-cat" href="news-details.html">Event</a>
             <div class="ms-news-thumb w-img">
               <a href="news-details.html"
-                ><img src="/static/client/img/news/news-01.png" alt="news image"
+                ><img
+                  src="/static/client/img/news/news-01.png"
+                  alt="news image"
               /></a>
             </div>
             <div class="ms-news-content ms-news-position p-absolute">
@@ -2383,7 +2305,9 @@
             <a class="ms-news4-cat" href="news-details.html">Wedding Party</a>
             <div class="ms-news-thumb w-img">
               <a href="news-details.html"
-                ><img src="/static/client/img/news/news-02.png" alt="news image"
+                ><img
+                  src="/static/client/img/news/news-02.png"
+                  alt="news image"
               /></a>
             </div>
             <div class="ms-news-content ms-news-position p-absolute">
@@ -2409,7 +2333,9 @@
             <a class="ms-news4-cat" href="news-details.html">DJ Party Event</a>
             <div class="ms-news-thumb w-img">
               <a href="news-details.html"
-                ><img src="/static/client/img/news/news-03.png" alt="news image"
+                ><img
+                  src="/static/client/img/news/news-03.png"
+                  alt="news image"
               /></a>
             </div>
             <div class="ms-news-content ms-news-position p-absolute">
@@ -2452,40 +2378,76 @@
       <div class="swiper-container ms-partner-active bdFadeUp">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
-            <img src="/static/client/img/partner/partner-01.png" alt="partner image" />
+            <img
+              src="/static/client/img/partner/partner-01.png"
+              alt="partner image"
+            />
           </div>
           <div class="swiper-slide">
-            <img src="/static/client/img/partner/partner-02.png" alt="partner image" />
+            <img
+              src="/static/client/img/partner/partner-02.png"
+              alt="partner image"
+            />
           </div>
           <div class="swiper-slide">
-            <img src="/static/client/img/partner/partner-03.png" alt="partner image" />
+            <img
+              src="/static/client/img/partner/partner-03.png"
+              alt="partner image"
+            />
           </div>
           <div class="swiper-slide">
-            <img src="/static/client/img/partner/partner-04.png" alt="partner image" />
+            <img
+              src="/static/client/img/partner/partner-04.png"
+              alt="partner image"
+            />
           </div>
           <div class="swiper-slide">
-            <img src="/static/client/img/partner/partner-05.png" alt="partner image" />
+            <img
+              src="/static/client/img/partner/partner-05.png"
+              alt="partner image"
+            />
           </div>
           <div class="swiper-slide">
-            <img src="/static/client/img/partner/partner-04.png" alt="partner image" />
+            <img
+              src="/static/client/img/partner/partner-04.png"
+              alt="partner image"
+            />
           </div>
           <div class="swiper-slide">
-            <img src="/static/client/img/partner/partner-01.png" alt="partner image" />
+            <img
+              src="/static/client/img/partner/partner-01.png"
+              alt="partner image"
+            />
           </div>
           <div class="swiper-slide">
-            <img src="/static/client/img/partner/partner-02.png" alt="partner image" />
+            <img
+              src="/static/client/img/partner/partner-02.png"
+              alt="partner image"
+            />
           </div>
           <div class="swiper-slide">
-            <img src="/static/client/img/partner/partner-03.png" alt="partner image" />
+            <img
+              src="/static/client/img/partner/partner-03.png"
+              alt="partner image"
+            />
           </div>
           <div class="swiper-slide">
-            <img src="/static/client/img/partner/partner-04.png" alt="partner image" />
+            <img
+              src="/static/client/img/partner/partner-04.png"
+              alt="partner image"
+            />
           </div>
           <div class="swiper-slide">
-            <img src="/static/client/img/partner/partner-05.png" alt="partner image" />
+            <img
+              src="/static/client/img/partner/partner-05.png"
+              alt="partner image"
+            />
           </div>
           <div class="swiper-slide">
-            <img src="/static/client/img/partner/partner-04.png" alt="partner image" />
+            <img
+              src="/static/client/img/partner/partner-04.png"
+              alt="partner image"
+            />
           </div>
         </div>
       </div>
@@ -2519,10 +2481,14 @@
           <div class="ms-cta-item">
             <div class="ms-cta-app">
               <a target="_blank" href="#"
-                ><img src="/static/client/img/cta/app-store.png" alt="app store"
+                ><img
+                  src="/static/client/img/cta/app-store.png"
+                  alt="app store"
               /></a>
               <a target="_blank" href="#"
-                ><img src="/static/client/img/cta/play-store.png" alt="play store"
+                ><img
+                  src="/static/client/img/cta/play-store.png"
+                  alt="play store"
               /></a>
             </div>
           </div>
