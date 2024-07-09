@@ -1,11 +1,12 @@
 package driver
 
 import (
+	"context"
 	"database/sql"
+	"fmt"
 	"time"
 
-	_ "github.com/jackc/pgx/v5"
-	_ "github.com/jackc/pgx/v5/stdlib"
+	_ "github.com/lib/pq"
 )
 
 // DB holds the database connection pool
@@ -15,48 +16,47 @@ type DB struct {
 
 var dbConnection = &DB{}
 
-const maxOpenDbConn = 10
-const maxIdleDbConn = 5
-const maxDbLifetime = 5 * time.Minute
+const (
+	maxOpenDbConn    = 25
+	maxIdleDbConn    = 25
+	maxDbLifetime    = 5 * time.Minute
+	maxDbIdleTime    = 5 * time.Minute
+	connMaxRetryTime = 5 * time.Second
+)
 
 // ConnectSQL creates database pool for Postgres
 func ConnectSQL(dbConnectionString string) (*DB, error) {
+	// No need to modify the connection string for lib/pq
 	newDatabase, err := NewDatabase(dbConnectionString)
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error connecting to database: %w", err)
 	}
 
+	// Configure connection pool
 	newDatabase.SetMaxOpenConns(maxOpenDbConn)
 	newDatabase.SetMaxIdleConns(maxIdleDbConn)
 	newDatabase.SetConnMaxLifetime(maxDbLifetime)
+	newDatabase.SetConnMaxIdleTime(maxDbIdleTime)
 
 	dbConnection.SQL = newDatabase
 
-	err = testDB(newDatabase)
-	if err != nil {
-		return nil, err
-	}
-	return dbConnection, nil
-}
+	// Test the database connection
+	ctx, cancel := context.WithTimeout(context.Background(), connMaxRetryTime)
+	defer cancel()
 
-// testDB tries to ping the database
-func testDB(newDatabase *sql.DB) error {
-	err := newDatabase.Ping()
+	err = newDatabase.PingContext(ctx)
 	if err != nil {
-		return err
+		return nil, fmt.Errorf("error pinging database: %w", err)
 	}
-	return nil
+
+	return dbConnection, nil
 }
 
 // NewDatabase creates a new database for the application
 func NewDatabase(dbConnectionString string) (*sql.DB, error) {
-	db, err := sql.Open("pgx", dbConnectionString)
+	db, err := sql.Open("postgres", dbConnectionString)
 	if err != nil {
-		return nil, err
-	}
-
-	if err = db.Ping(); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error opening database: %w", err)
 	}
 
 	return db, nil
