@@ -2,7 +2,6 @@ package driver
 
 import (
 	"database/sql"
-	"fmt"
 	"time"
 
 	_ "github.com/jackc/pgx/v5"
@@ -22,9 +21,6 @@ const maxDbLifetime = 5 * time.Minute
 
 // ConnectSQL creates database pool for Postgres
 func ConnectSQL(dbConnectionString string) (*DB, error) {
-	// Modify connection string to disable prepared statement caching
-	dbConnectionString = fmt.Sprintf("%s?prefer_simple_protocol=true", dbConnectionString)
-	
 	newDatabase, err := NewDatabase(dbConnectionString)
 	if err != nil {
 		panic(err)
