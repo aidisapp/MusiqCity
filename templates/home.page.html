@@ -1,6 +1,7 @@
 {{template "base" .}} {{define "title"}} {{end}} {{define "css"}}
 
-<style></style>
+<style>
+</style>
 {{end}} {{define "content"}}
 
 <main>
@@ -24,7 +25,9 @@
                 <h3 class="ms-song-title reduce-text">
                   <a href="/artists/{{.ID}}">{{truncate .Name 20}}</a>
                 </h3>
-                <span class="ms-song-text reduce-text">{{truncate .Genres 20}}</span>
+                <span class="ms-song-text reduce-text"
+                  >{{truncate .Genres 20}}</span
+                >
               </div>
             </div>
           </div>
@@ -38,6 +41,7 @@
   <!-- Banner Area Start Here  -->
   <section class="ms-banner-area p-relative">
     <a class="ms-scroll-down" href="#">SCROLL DOWN</a>
+
     <div class="ms-banner-social p-absolute">
       <div class="ms-footer-social">
         <a href="https://www.instagram.com/" title="Instagram" target="_blank"
@@ -49,6 +53,7 @@
         >
       </div>
     </div>
+
     <div class="container-fluid ms-maw-1710">
       <div
         class="ms-br-30 mx-auto include__bg z-index-1 ms-overlay-1 p-relative"
@@ -63,7 +68,7 @@
                     class="ms-banner__bg-title"
                     data-background="/static/client/img/banner/title-bg.jpg"
                   >
-                    Musicly
+                    MusiqCity
                   </h1>
                   <h2 class="ms-banner__title msg_title bd-title-anim">
                     Exceptional Live Bands &amp; Musicians Hire For Your Event
