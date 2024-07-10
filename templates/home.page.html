@@ -1418,29 +1418,34 @@
           </div>
         </div>
       </div>
+
       <div class="ms-fun-brand-wrap bdFadeUp">
+
+        {{range $artists}}
         <div class="ms-fun-brand-item ms-fun-border">
           <div class="ms-fun-brand-top mb-20">
             <div class="ms-fun-brand-thumb">
-              <a href="genres-details.html"
+              <a href="/artists/{{.ID}}"
                 ><img
-                  src="/static/client/img/function-brand/function-brand-01.png"
+                  src="{{.Logo}}"
                   alt="function brand"
               /></a>
             </div>
             <div class="ms-fun-brand-content">
               <h3 class="ms-fun-brand-title">
-                <a href="genres-details.html">Beastie Boys</a>
+                <a href="/artists/{{.ID}}">{{.Name}}</a>
               </h3>
-              <span class="ms-fun-brand-subtitle">American hip-hop</span>
+              <span class="ms-fun-brand-subtitle">{{truncate .Genres 20}}</span>
             </div>
-          </div>
+          </div>  
+
           <div class="ms-fun-brand-bottom">
             <div class="ms-fun-brand-location">
               <a href="https://www.google.com/maps" target="_blank">
-                <i class="flaticon-pin"></i>Ohio</a
+                <i class="flaticon-pin"></i>{{.City}}</a
               >
             </div>
+
             <div class="ms-fun-brand-rating">
               <i class="flaticon-star"></i>
               <i class="flaticon-star"></i>
@@ -1448,349 +1453,11 @@
               <i class="flaticon-star"></i>
               <i class="flaticon-star"></i>
             </div>
+            
           </div>
         </div>
-        <div class="ms-fun-brand-item ms-fun-border">
-          <div class="ms-fun-brand-top mb-20">
-            <div class="ms-fun-brand-thumb">
-              <a href="genres-details.html"
-                ><img
-                  src="/static/client/img/function-brand/function-brand-02.png"
-                  alt="function brand"
-              /></a>
-            </div>
-            <div class="ms-fun-brand-content">
-              <h3 class="ms-fun-brand-title">
-                <a href="genres-details.html">Blondie</a>
-              </h3>
-              <span class="ms-fun-brand-subtitle">American rock group</span>
-            </div>
-          </div>
-          <div class="ms-fun-brand-bottom">
-            <div class="ms-fun-brand-location">
-              <a href="https://www.google.com/maps" target="_blank">
-                <i class="flaticon-pin"></i>Chicago</a
-              >
-            </div>
-            <div class="ms-fun-brand-rating">
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star unrate"></i>
-            </div>
-          </div>
-        </div>
-        <div class="ms-fun-brand-item ms-fun-border">
-          <div class="ms-fun-brand-top mb-20">
-            <div class="ms-fun-brand-thumb">
-              <a href="genres-details.html"
-                ><img
-                  src="/static/client/img/function-brand/function-brand-03.png"
-                  alt="function brand"
-              /></a>
-            </div>
-            <div class="ms-fun-brand-content">
-              <h3 class="ms-fun-brand-title">
-                <a href="genres-details.html">Black Sabbath</a>
-              </h3>
-              <span class="ms-fun-brand-subtitle">British rock group</span>
-            </div>
-          </div>
-          <div class="ms-fun-brand-bottom">
-            <div class="ms-fun-brand-location">
-              <a href="https://www.google.com/maps" target="_blank">
-                <i class="flaticon-pin"></i>London</a
-              >
-            </div>
-            <div class="ms-fun-brand-rating">
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-            </div>
-          </div>
-        </div>
-        <div class="ms-fun-brand-item ms-fun-border">
-          <div class="ms-fun-brand-top mb-20">
-            <div class="ms-fun-brand-thumb">
-              <a href="genres-details.html"
-                ><img
-                  src="/static/client/img/function-brand/function-brand-04.png"
-                  alt="function brand"
-              /></a>
-            </div>
-            <div class="ms-fun-brand-content">
-              <h3 class="ms-fun-brand-title">
-                <a href="genres-details.html">The Coasters</a>
-              </h3>
-              <span class="ms-fun-brand-subtitle">Canada band group</span>
-            </div>
-          </div>
-          <div class="ms-fun-brand-bottom">
-            <div class="ms-fun-brand-location">
-              <a href="https://www.google.com/maps" target="_blank">
-                <i class="flaticon-pin"></i>London</a
-              >
-            </div>
-            <div class="ms-fun-brand-rating">
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-            </div>
-          </div>
-        </div>
-        <div class="ms-fun-brand-item ms-fun-border">
-          <div class="ms-fun-brand-top mb-20">
-            <div class="ms-fun-brand-thumb">
-              <a href="genres-details.html"
-                ><img
-                  src="/static/client/img/function-brand/function-brand-05.png"
-                  alt="function brand"
-              /></a>
-            </div>
-            <div class="ms-fun-brand-content">
-              <h3 class="ms-fun-brand-title">
-                <a href="genres-details.html">Beastie Boys</a>
-              </h3>
-              <span class="ms-fun-brand-subtitle">American hip-hop</span>
-            </div>
-          </div>
-          <div class="ms-fun-brand-bottom">
-            <div class="ms-fun-brand-location">
-              <a href="https://www.google.com/maps" target="_blank">
-                <i class="flaticon-pin"></i>Georgia</a
-              >
-            </div>
-            <div class="ms-fun-brand-rating">
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star unrate"></i>
-            </div>
-          </div>
-        </div>
-        <div class="ms-fun-brand-item ms-fun-border">
-          <div class="ms-fun-brand-top mb-20">
-            <div class="ms-fun-brand-thumb">
-              <a href="genres-details.html"
-                ><img
-                  src="/static/client/img/function-brand/function-brand-06.png"
-                  alt="function brand"
-              /></a>
-            </div>
-            <div class="ms-fun-brand-content">
-              <h3 class="ms-fun-brand-title">
-                <a href="genres-details.html">Blondie</a>
-              </h3>
-              <span class="ms-fun-brand-subtitle">American rock group</span>
-            </div>
-          </div>
-          <div class="ms-fun-brand-bottom">
-            <div class="ms-fun-brand-location">
-              <a href="https://www.google.com/maps" target="_blank">
-                <i class="flaticon-pin"></i>City Club</a
-              >
-            </div>
-            <div class="ms-fun-brand-rating">
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-            </div>
-          </div>
-        </div>
-        <div class="ms-fun-brand-item ms-fun-border">
-          <div class="ms-fun-brand-top mb-20">
-            <div class="ms-fun-brand-thumb">
-              <a href="genres-details.html"
-                ><img
-                  src="/static/client/img/function-brand/function-brand-07.png"
-                  alt="function brand"
-              /></a>
-            </div>
-            <div class="ms-fun-brand-content">
-              <h3 class="ms-fun-brand-title">
-                <a href="genres-details.html">Black Sabbath</a>
-              </h3>
-              <span class="ms-fun-brand-subtitle">British rock group</span>
-            </div>
-          </div>
-          <div class="ms-fun-brand-bottom">
-            <div class="ms-fun-brand-location">
-              <a href="https://www.google.com/maps" target="_blank">
-                <i class="flaticon-pin"></i>Kenia</a
-              >
-            </div>
-            <div class="ms-fun-brand-rating">
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-            </div>
-          </div>
-        </div>
-        <div class="ms-fun-brand-item ms-fun-border">
-          <div class="ms-fun-brand-top mb-20">
-            <div class="ms-fun-brand-thumb">
-              <a href="genres-details.html"
-                ><img
-                  src="/static/client/img/function-brand/function-brand-08.png"
-                  alt="function brand"
-              /></a>
-            </div>
-            <div class="ms-fun-brand-content">
-              <h3 class="ms-fun-brand-title">
-                <a href="genres-details.html">The Coasters</a>
-              </h3>
-              <span class="ms-fun-brand-subtitle">Canada band group</span>
-            </div>
-          </div>
-          <div class="ms-fun-brand-bottom">
-            <div class="ms-fun-brand-location">
-              <a href="https://www.google.com/maps" target="_blank">
-                <i class="flaticon-pin"></i>Pakistan</a
-              >
-            </div>
-            <div class="ms-fun-brand-rating">
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star unrate"></i>
-            </div>
-          </div>
-        </div>
-        <div class="ms-fun-brand-item ms-fun-border">
-          <div class="ms-fun-brand-top mb-20">
-            <div class="ms-fun-brand-thumb">
-              <a href="genres-details.html"
-                ><img
-                  src="/static/client/img/function-brand/function-brand-05.png"
-                  alt="function brand"
-              /></a>
-            </div>
-            <div class="ms-fun-brand-content">
-              <h3 class="ms-fun-brand-title">
-                <a href="genres-details.html">Blondie</a>
-              </h3>
-              <span class="ms-fun-brand-subtitle">American rock group</span>
-            </div>
-          </div>
-          <div class="ms-fun-brand-bottom">
-            <div class="ms-fun-brand-location">
-              <a href="https://www.google.com/maps" target="_blank">
-                <i class="flaticon-pin"></i>Chicago</a
-              >
-            </div>
-            <div class="ms-fun-brand-rating">
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star unrate"></i>
-            </div>
-          </div>
-        </div>
-        <div class="ms-fun-brand-item ms-fun-border">
-          <div class="ms-fun-brand-top mb-20">
-            <div class="ms-fun-brand-thumb">
-              <a href="genres-details.html"
-                ><img
-                  src="/static/client/img/function-brand/function-brand-01.png"
-                  alt="function brand"
-              /></a>
-            </div>
-            <div class="ms-fun-brand-content">
-              <h3 class="ms-fun-brand-title">
-                <a href="genres-details.html">Beastie Boys</a>
-              </h3>
-              <span class="ms-fun-brand-subtitle">American hip-hop</span>
-            </div>
-          </div>
-          <div class="ms-fun-brand-bottom">
-            <div class="ms-fun-brand-location">
-              <a href="https://www.google.com/maps" target="_blank">
-                <i class="flaticon-pin"></i>Ohio</a
-              >
-            </div>
-            <div class="ms-fun-brand-rating">
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-            </div>
-          </div>
-        </div>
-        <div class="ms-fun-brand-item ms-fun-border">
-          <div class="ms-fun-brand-top mb-20">
-            <div class="ms-fun-brand-thumb">
-              <a href="genres-details.html"
-                ><img
-                  src="/static/client/img/function-brand/function-brand-05.png"
-                  alt="function brand"
-              /></a>
-            </div>
-            <div class="ms-fun-brand-content">
-              <h3 class="ms-fun-brand-title">
-                <a href="genres-details.html">Beastie Boys</a>
-              </h3>
-              <span class="ms-fun-brand-subtitle">American hip-hop</span>
-            </div>
-          </div>
-          <div class="ms-fun-brand-bottom">
-            <div class="ms-fun-brand-location">
-              <a href="https://www.google.com/maps" target="_blank">
-                <i class="flaticon-pin"></i>Georgia</a
-              >
-            </div>
-            <div class="ms-fun-brand-rating">
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star unrate"></i>
-            </div>
-          </div>
-        </div>
-        <div class="ms-fun-brand-item ms-fun-border">
-          <div class="ms-fun-brand-top mb-20">
-            <div class="ms-fun-brand-thumb">
-              <a href="genres-details.html"
-                ><img
-                  src="/static/client/img/function-brand/function-brand-06.png"
-                  alt="function brand"
-              /></a>
-            </div>
-            <div class="ms-fun-brand-content">
-              <h3 class="ms-fun-brand-title">
-                <a href="genres-details.html">Blondie</a>
-              </h3>
-              <span class="ms-fun-brand-subtitle">American rock group</span>
-            </div>
-          </div>
-          <div class="ms-fun-brand-bottom">
-            <div class="ms-fun-brand-location">
-              <a href="https://www.google.com/maps" target="_blank">
-                <i class="flaticon-pin"></i>City Club</a
-              >
-            </div>
-            <div class="ms-fun-brand-rating">
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-              <i class="flaticon-star"></i>
-            </div>
-          </div>
-        </div>
+        {{end}}
+
       </div>
     </div>
   </section>
