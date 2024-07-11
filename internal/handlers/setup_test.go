@@ -97,13 +97,8 @@ func getRoutes() http.Handler {
 	mux.Get("/", Repo.Home)
 	mux.Get("/about", Repo.About)
 	mux.Get("/contact", Repo.Contact)
-	mux.Get("/rooms/{id}", Repo.SingleRoom)
 
-	mux.Get("/reservation", Repo.Reservation)
-	mux.Post("/reservation", Repo.PostReservation)
 	mux.Post("/reservation-json", Repo.AvailabilityJSON)
-	mux.Get("/choose-room/{id}", Repo.ChooseRoom)
-	mux.Get("/book-room", Repo.BookRoom)
 
 	mux.Get("/make-reservation", Repo.MakeReservation)
 	mux.Post("/make-reservation", Repo.PostMakeReservation)
@@ -115,13 +110,8 @@ func getRoutes() http.Handler {
 
 	mux.Get("/dashboard", Repo.AdminDashboard)
 
-	mux.Get("/new-reservations", Repo.AdminNewReservations)
-	mux.Get("/all-reservations", Repo.AdminAllReservations)
 	mux.Get("/reservations-calendar", Repo.AdminReservationsCalendar)
 	mux.Post("/reservations-calendar", Repo.AdminPostReservationsCalendar)
-
-	mux.Get("/reservations/{src}/{id}/show", Repo.AdminSingleReservation)
-	mux.Post("/reservations/{src}/{id}", Repo.PostAdminSingleReservation)
 
 	mux.Get("/admin/rooms", Repo.AdminAllRooms)
 	mux.Get("/admin/rooms/{id}", Repo.AdminSingleRoom)

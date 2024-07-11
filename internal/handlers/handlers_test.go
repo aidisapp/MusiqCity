@@ -114,42 +114,6 @@ var reservationTests = []struct {
 	},
 }
 
-func TestRepository_MakeReservation(t *testing.T) {
-	for _, e := range reservationTests {
-		req, _ := http.NewRequest("GET", "/make-reservation", nil)
-		ctx := getContext(req)
-		req = req.WithContext(ctx)
-
-		rr := httptest.NewRecorder()
-		if e.reservation.RoomID > 0 {
-			session.Put(ctx, "reservation", e.reservation)
-		}
-
-		handler := http.HandlerFunc(Repo.Reservation)
-		handler.ServeHTTP(rr, req)
-
-		if rr.Code != e.expectedStatusCode {
-			t.Errorf("%s returned wrong response code: got %d, wanted %d", e.name, rr.Code, e.expectedStatusCode)
-		}
-
-		if e.expectedLocation != "" {
-			// get the URL from test
-			actualLoc, _ := rr.Result().Location()
-			if actualLoc.String() != e.expectedLocation {
-				t.Errorf("failed %s: expected location %s, but got location %s", e.name, e.expectedLocation, actualLoc.String())
-			}
-		}
-
-		if e.expectedHTML != "" {
-			// read the response body into a string
-			html := rr.Body.String()
-			if !strings.Contains(html, e.expectedHTML) {
-				t.Errorf("failed %s: expected to find %s but did not", e.name, e.expectedHTML)
-			}
-		}
-	}
-}
-
 // postReservationTests is the test data for hte PostReservation handler test
 var postReservationTests = []struct {
 	name                 string
@@ -270,49 +234,6 @@ var postReservationTests = []struct {
 		expectedHTML:         "",
 		expectedLocation:     "/",
 	},
-}
-
-// TestPostReservation tests the PostReservation handler
-func TestPostReservation(t *testing.T) {
-	for _, e := range postReservationTests {
-		var req *http.Request
-		if e.postedData != nil {
-			req, _ = http.NewRequest("POST", "/make-reservation", strings.NewReader(e.postedData.Encode()))
-		} else {
-			req, _ = http.NewRequest("POST", "/make-reservation", nil)
-
-		}
-		ctx := getContext(req)
-		req = req.WithContext(ctx)
-		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-
-		rr := httptest.NewRecorder()
-
-		handler := http.HandlerFunc(Repo.PostReservation)
-
-		handler.ServeHTTP(rr, req)
-
-		if rr.Code != e.expectedResponseCode {
-			t.Errorf("%s returned wrong response code: got %d, wanted %d", e.name, rr.Code, e.expectedResponseCode)
-		}
-
-		if e.expectedLocation != "" {
-			// get the URL from test
-			actualLoc, _ := rr.Result().Location()
-			if actualLoc.String() != e.expectedLocation {
-				t.Errorf("failed %s: expected location %s, but got location %s", e.name, e.expectedLocation, actualLoc.String())
-			}
-		}
-
-		if e.expectedHTML != "" {
-			// read the response body into a string
-			html := rr.Body.String()
-			if !strings.Contains(html, e.expectedHTML) {
-				t.Errorf("failed %s: expected to find %s but did not", e.name, e.expectedHTML)
-			}
-		}
-
-	}
 }
 
 func TestNewRepo(t *testing.T) {
@@ -572,36 +493,6 @@ var chooseRoomTests = []struct {
 	},
 }
 
-// TestChooseRoom tests the ChooseRoom handler
-func TestChooseRoom(t *testing.T) {
-	for _, e := range chooseRoomTests {
-		req, _ := http.NewRequest("GET", e.url, nil)
-		ctx := getContext(req)
-		req = req.WithContext(ctx)
-		// set the RequestURI on the request so that we can grab the ID from the URL
-		req.RequestURI = e.url
-
-		rr := httptest.NewRecorder()
-		if e.reservation.RoomID > 0 {
-			session.Put(ctx, "reservation", e.reservation)
-		}
-
-		handler := http.HandlerFunc(Repo.ChooseRoom)
-		handler.ServeHTTP(rr, req)
-
-		if rr.Code != e.expectedStatusCode {
-			t.Errorf("%s returned wrong response code: got %d, wanted %d", e.name, rr.Code, e.expectedStatusCode)
-		}
-
-		if e.expectedLocation != "" {
-			actualLoc, _ := rr.Result().Location()
-			if actualLoc.String() != e.expectedLocation {
-				t.Errorf("failed %s: expected location %s, but got location %s", e.name, e.expectedLocation, actualLoc.String())
-			}
-		}
-	}
-}
-
 // bookRoomTests is the data for the BookRoom handler tests
 var bookRoomTests = []struct {
 	name               string
@@ -618,34 +509,6 @@ var bookRoomTests = []struct {
 		url:                "/book-room?s=2040-01-01&e=2040-01-02&id=4",
 		expectedStatusCode: http.StatusSeeOther,
 	},
-}
-
-// TestBookRoom tests the BookRoom handler
-func TestBookRoom(t *testing.T) {
-	reservation := models.Reservation{
-		RoomID: 1,
-		Room: models.Room{
-			ID:       1,
-			RoomName: "Generals Suit",
-		},
-	}
-
-	for _, e := range bookRoomTests {
-		req, _ := http.NewRequest("GET", e.url, nil)
-		ctx := getContext(req)
-		req = req.WithContext(ctx)
-
-		rr := httptest.NewRecorder()
-		session.Put(ctx, "reservation", reservation)
-
-		handler := http.HandlerFunc(Repo.BookRoom)
-
-		handler.ServeHTTP(rr, req)
-
-		if rr.Code != http.StatusOK {
-			t.Errorf("%s failed: returned wrong response code: got %d, wanted %d", e.name, rr.Code, e.expectedStatusCode)
-		}
-	}
 }
 
 // loginTests is the data for the Login handler tests
@@ -771,50 +634,6 @@ var adminPostShowReservationTests = []struct {
 		expectedLocation:     "/admin/reservations-calendar?y=2022&m=01",
 		expectedHTML:         "",
 	},
-}
-
-// TestAdminPostShowReservation tests the AdminPostReservation handler
-func TestAdminPostShowReservation(t *testing.T) {
-	for _, e := range adminPostShowReservationTests {
-		var req *http.Request
-		if e.postedData != nil {
-			req, _ = http.NewRequest("POST", "/user/login", strings.NewReader(e.postedData.Encode()))
-		} else {
-			req, _ = http.NewRequest("POST", "/user/login", nil)
-		}
-		ctx := getContext(req)
-		req = req.WithContext(ctx)
-		req.RequestURI = e.url
-
-		// set the header
-		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-		rr := httptest.NewRecorder()
-
-		// call the handler
-		handler := http.HandlerFunc(Repo.PostAdminSingleReservation)
-		handler.ServeHTTP(rr, req)
-
-		if rr.Code != e.expectedResponseCode {
-			t.Errorf("failed %s: expected code %d, but got %d", e.name, e.expectedResponseCode, rr.Code)
-		}
-
-		if e.expectedLocation != "" {
-			// get the URL from test
-			actualLoc, _ := rr.Result().Location()
-			if actualLoc.String() != e.expectedLocation {
-				t.Errorf("failed %s: expected location %s, but got location %s", e.name, e.expectedLocation, actualLoc.String())
-			}
-		}
-
-		// checking for expected values in HTML
-		if e.expectedHTML != "" {
-			// read the response body into a string
-			html := rr.Body.String()
-			if !strings.Contains(html, e.expectedHTML) {
-				t.Errorf("failed %s: expected to find %s but did not", e.name, e.expectedHTML)
-			}
-		}
-	}
 }
 
 var adminPostReservationCalendarTests = []struct {

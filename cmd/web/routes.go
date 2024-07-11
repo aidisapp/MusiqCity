@@ -22,13 +22,8 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Get("/artists/{id}", handlers.Repo.SingleArtist)
 	mux.Get("/about", handlers.Repo.About)
 	mux.Get("/contact", handlers.Repo.Contact)
-	mux.Get("/rooms/{id}", handlers.Repo.SingleRoom)
 
-	mux.Get("/reservation", handlers.Repo.Reservation)
-	mux.Post("/reservation", handlers.Repo.PostReservation)
 	mux.Post("/reservation-json", handlers.Repo.AvailabilityJSON)
-	mux.Get("/choose-room/{id}", handlers.Repo.ChooseRoom)
-	mux.Get("/book-room", handlers.Repo.BookRoom)
 
 	mux.Get("/make-reservation", handlers.Repo.MakeReservation)
 	mux.Post("/make-reservation", handlers.Repo.PostMakeReservation)
@@ -46,13 +41,8 @@ func routes(app *config.AppConfig) http.Handler {
 		mux.Use(Auth)
 		mux.Get("/dashboard", handlers.Repo.AdminDashboard)
 
-		mux.Get("/new-reservations", handlers.Repo.AdminNewReservations)
-		mux.Get("/all-reservations", handlers.Repo.AdminAllReservations)
 		mux.Get("/reservations-calendar", handlers.Repo.AdminReservationsCalendar)
 		mux.Post("/reservations-calendar", handlers.Repo.AdminPostReservationsCalendar)
-
-		mux.Get("/reservations/{src}/{id}/show", handlers.Repo.AdminSingleReservation)
-		mux.Post("/reservations/{src}/{id}", handlers.Repo.PostAdminSingleReservation)
 
 		mux.Get("/rooms", handlers.Repo.AdminAllRooms)
 		mux.Get("/rooms/{id}", handlers.Repo.AdminSingleRoom)
