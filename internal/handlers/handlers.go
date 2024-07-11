@@ -64,6 +64,21 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// This function handles the Home page and renders the template
+func (m *Repository) ArtistsPage(w http.ResponseWriter, r *http.Request) {
+	artists, err := m.DB.AllArtists()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["artists"] = artists
+	render.Template(w, r, "artists.page.html", &models.TemplateData{
+		Data: data,
+	})
+}
+
 // This function handles the About page and renders the template
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "about.page.html", &models.TemplateData{})
