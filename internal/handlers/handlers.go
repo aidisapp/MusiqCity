@@ -79,6 +79,36 @@ func (m *Repository) ArtistsPage(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// This function handles the single room(Luxery) page and renders the template
+func (m *Repository) SingleArtist(w http.ResponseWriter, r *http.Request) {
+	urlParams := strings.Split(r.RequestURI, "/")
+	id, err := strconv.Atoi(urlParams[2])
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	artist, err := m.DB.GetArtistByID(id)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	options, err := m.DB.AllArtistBookingOptions(id)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["artist"] = artist
+	data["options"] = options
+
+	render.Template(w, r, "single-artist.page.html", &models.TemplateData{
+		Data: data,
+	})
+}
+
 // This function handles the About page and renders the template
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "about.page.html", &models.TemplateData{})

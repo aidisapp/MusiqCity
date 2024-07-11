@@ -957,6 +957,45 @@ func (m *postgresDBRepo) AllBookingOptions() ([]models.BookingOptions, error) {
 	return options, nil
 }
 
+// Get all Booking Options
+func (m *postgresDBRepo) AllArtistBookingOptions(id int) ([]models.BookingOptions, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var options []models.BookingOptions
+
+	query := `select id, title, description, price, artist_id, created_at, updated_at from booking_options where artist_id = $1 order by created_at asc`
+
+	rows, err := m.DB.QueryContext(ctx, query, id)
+	if err != nil {
+		return options, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var option models.BookingOptions
+		err := rows.Scan(
+			&option.ID,
+			&option.Title,
+			&option.Description,
+			&option.Price,
+			&option.ArtistID,
+			&option.CreatedAt,
+			&option.UpdatedAt,
+		)
+		if err != nil {
+			return options, err
+		}
+		options = append(options, option)
+	}
+
+	if err = rows.Err(); err != nil {
+		return options, err
+	}
+
+	return options, nil
+}
+
 // Inserts a new Boking Option into the database
 func (repo *postgresDBRepo) CreateBookingOption(option models.BookingOptions) error {
 	context, cancel := context.WithTimeout(context.Background(), 3*time.Second)

@@ -192,6 +192,12 @@ func (m *testDBRepo) AllBookingOptions() ([]models.BookingOptions, error) {
 	return options, nil
 }
 
+// Get all Booking Options
+func (m *testDBRepo) AllArtistBookingOptions(id int) ([]models.BookingOptions, error) {
+	var options []models.BookingOptions
+	return options, nil
+}
+
 // Inserts a new Boking Option into the database
 func (repo *testDBRepo) CreateBookingOption(option models.BookingOptions) error {
 	return nil
