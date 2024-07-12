@@ -73,6 +73,8 @@ func routes(app *config.AppConfig) http.Handler {
 		mux.Post("/booking-options/new-option", handlers.Repo.PostAdminNewOption)
 		mux.Get("/booking-options/{id}", handlers.Repo.AdminSingleOption)
 		mux.Post("/booking-options/{id}", handlers.Repo.PostAdminSingleOption)
+
+		mux.Post("/create-booking", handlers.Repo.PostMakeReservation)
 	})
 
 	return mux
